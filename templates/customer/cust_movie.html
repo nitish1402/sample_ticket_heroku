@@ -1,0 +1,31 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row">
+                <h2>Movies in {{ selopt }}</h2>
+            </div>
+            <div class="row" style="text-align: center">
+                {% for x in mobj %}
+                    {% if x.mcity == selopt %}
+                    <a href="{% url 'custloc' prod_id=x.id %}">
+                        <div class="col-sm-3">
+                            <div><img src="{{ x.mimg.url }}" alt="no poster" style="height: 300px"/></div>
+                            <div><h3>{{ x.mname }}</h3></div>
+                        </div>
+                    </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

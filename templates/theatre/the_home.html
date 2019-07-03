@@ -1,0 +1,76 @@
+{% extends 'theatre/the_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block the_head %}
+
+    {% endblock %}
+</head>
+<body>
+    {% block the_body %}
+        <div class="container d-flex justify-content-between">
+
+            <div class="row" style='text-align: center'>
+                <div class="col-sm-4"><h3>Theatre Name : {{ tdreg.tname }}</h3></div>
+                <div class="col-sm-4"><h3>Theatre Location : {{ tdreg.tloc }}</h3></div>
+                <div class="col-sm-4"><h3>Theatre City : {{ tdreg.tcity }}</h3></div>
+            </div>
+
+        <div class="row" style='text-align: center'>
+            <div class="col-sm-4" style="padding: 10px">
+                <div><h2>Morning Show</h2></div>
+                {% if tdreg.tmorn_name == 'No Movie Name' %}
+                    <div>
+                    <div><img src="{% static 'css/mycss/noposter.JPG' %}" alt="no poster" style="height: 300px; width:300px"/> </div>
+                    <div><h4>Name: No movie uploaded</h4></div>
+                    <div><h4>Timings: 09:00 - 12:00 AM</h4></div>
+                    </div>
+                 {% else %}
+                     <div>
+                    <div><img src="{{ tdreg.tmorn_img.url }}" alt="no poster" style="height: 300px; width:300px"/> </div>
+                    <div><h4>Name: {{ tdreg.tmorn_name }}</h4></div>
+                    <div><h4>Timings: 09:00 - 12:00 AM</h4></div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-sm-4" style="padding: 10px">
+                <div><h2>Afternoon Show</h2></div>
+                {% if tdreg.tafter_name == 'No Movie Name' %}
+                    <div>
+                    <div><img src="{% static 'css/mycss/noposter.JPG' %}" alt="no poster" style="height: 300px; width:300px"/> </div>
+                    <div><h4>Name: No movie uploaded</h4></div>
+                    <div><h4>Timings: 01:00 - 04:00 PM</h4></div>
+                    </div>
+                 {% else %}
+                    <div>
+                    <div><img src="{{ tdreg.tafter_img.url }}" alt="no poster" style="height: 300px;width:300px"/> </div>
+                    <div><h4>Name: {{ tdreg.tafter_name }}</h4></div>
+                    <div><h4>Timings: 01:00 - 04:00 PM</h4></div>
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="col-sm-4" style="padding: 10px">
+                <div><h2>Evening Show</h2></div>
+                {% if tdreg.teve_name == 'No Movie Name' %}
+                    <div>
+                    <div><img src="{% static 'css/mycss/noposter.JPG' %}" alt="no poster" style="height: 300px; width:300px"/> </div>
+                    <div><h4>Name: No movie uploaded</h4></div>
+                    <div><h4>Timings: 06:00 - 09:00 PM</h4></div>
+                    </div>
+                 {% else %}
+                    <div>
+                    <div><img src="{{ tdreg.teve_img.url }}" alt="no poster" style="height: 300px; width:300px"/> </div>
+                    <div><h4>Name: {{ tdreg.teve_name }}</h4></div>
+                    <div><h4>Timings: 06:00 - 09:00 PM</h4></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

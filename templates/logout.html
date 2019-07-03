@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block base_head %}
+
+    {% endblock %}
+</head>
+<body>
+    {% block base_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row" style="text-align: center">
+                <h1>Logging Out in few Seconds..</h1>
+                <h2>No need to wait <a href="{% url 'index' %}">CLICK ME</a></h2>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

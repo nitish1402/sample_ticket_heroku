@@ -1,0 +1,70 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container-fluid d-flex justify-content-between">
+            <div class="row">
+                <div class="col-sm-3"><h4>Movie Theatre Name : {{ sobj.stname }}</h4></div>
+                <div class="col-sm-3"><h4>Movie Name : {{ sobj.sshowname }}</h4></div>
+                <div class="col-sm-2">
+                    {% if sobj.sshowtype == 'morn' %}
+                    <h4>Movie time : 09:00 AM</h4>
+                    {% endif %}
+                    {% if sobj.sshowtype == 'after' %}
+                    <h4>Movie time : 01:00 PM</h4>
+                    {% endif %}
+                    {% if sobj.sshowtype == 'eve' %}
+                    <h4>Movie time : 06:00 PM</h4>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4"><h4> Booking Date : {{ sobj.stdate }}</h4></div>
+            </div>
+            <div style="margin-top: 10px"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <form action="{% url 'custconfirm' %}" method="POST">{% csrf_token %}
+                        <div style="margin-top: 10px"></div>
+                        {% if dis == 'yes' %}
+                            <div class="row" style="">
+                                <div class="col-sm-12"><h2>Avaliable Slots:</h2> </div>
+                            </div>
+                            <div style="margin-top: 10px"></div>
+                            <div class="container-fluid d-flex justify-content-between">
+                                {% for x in tlist %}
+                                    {% if x in list %}
+                                       <div class="col-sm-3" style="color: red">
+                                           <div class="checkbox-inline" style="padding: 10px">
+                                               <label><input type="checkbox" disabled="disabled" value="">Seat {{ x }} Booked Already</label>
+                                           </div>
+                                       </div>
+                                    {% else %}
+                                        <div class="col-sm-3" style="color: green">
+                                           <div class="checkbox-inline" style="padding: 10px">
+                                               <label><input type="checkbox" name="checks" value="{{ x }}" >Seat {{ x }}</label>
+                                           </div>
+                                       </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div style="margin-top: 10px"></div>
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: center">
+                                    <input type="submit" class="btn btn-success" value="Book Slot" />
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px"></div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

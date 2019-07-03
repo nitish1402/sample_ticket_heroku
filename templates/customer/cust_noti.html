@@ -1,0 +1,51 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Notifications</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row" style="text-align: center">
+                <div class="col-sm-12">
+                    <div class="container">
+                          <h2>Booked Slots</h2>
+                          <table class="table table-bordered">
+                              <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Theatre Name</th>
+                                        <th>Booked Date</th>
+                                        <th>Movie Name</th>
+                                        <th>Movie Time</th>
+                                        <th>Seat</th>
+                                        <th>Total Cost</th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    {% for x in sobj %}
+                                        {% if x.sumail == tid and x.sstat == 'yes' and x.stcost != None %}
+                                            <tr>
+                                                <td>{{ x.sumail }}</td>
+                                                <td>{{x.stname}}</td>
+                                                <td>{{ x.stdate }}</td>
+                                                <td>{{ x.sshowname }}</td>
+                                                <td>{{ x.sshowtype }}</td>
+                                                <td>{{ x.sslot }}</td>
+                                                <td>{{ x.stcost }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                              </tbody>
+                          </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

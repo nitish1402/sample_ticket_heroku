@@ -1,0 +1,205 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row">
+                <div class="col-sm-6"><img src="{{ mobj.mimg.url }}" style="width: 50%;height: 400px"/></div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <h2>Movie Name : {{ mobj.mname }}</h2>
+                        <h2>City : {{ mobj.mcity }}</h2>
+                    </div>
+                    <div class="row">
+                        <form action="{% url 'custloc' prod_id=mobj.id %}" class="form-inline" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <label>Select Date: </label>
+                            <input type="date" class="form-control" name="seldate" required/>
+                            <input type="submit" value="Select date" class="btn btn-success"/>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="row">
+                        <h3 style="color:red;">{{ mess }}</h3>
+                    </div>
+                </div>
+            </div>
+            {% if dis == 'y' %}:
+                {% if today_c == 0 %}
+                    <div class="row">
+                    <form action="{% url 'custloc2' %}" method="POST">{% csrf_token %}
+                    <div class="row"><div class="col-sm-12"><h2>Select Show Place and Time:</h2></div></div>
+                    <div style="margin-top: 20px"></div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            {% for x in tobj %}
+                                {% if x.tname != 'Please update' and x.tcity == mobj.mcity %}
+                                    {% if x.tmorn_name == mobj.mname or x.tafter_name == mobj.mname or x.teve_name == mobj.mname %}
+                                        {%  if x.tdate.year >= sobj.stdate.year %}
+                                            {% if x.tdate.month == sobj.stdate.month %}
+                                                {% if x.tdate.day >= sobj.stdate.day %}
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><h4>{{ x.tname }}</h4></div>
+                                                        <div class="col-sm-2">
+                                                            {% if x.tmorn_name == mobj.mname and mshow == '' %}
+                                                                <h4 style="color: #1c7430">
+                                                                    <div class="radio">
+                                                                        <label><input name="sradio" type="radio" value="morn {{ x.id }}" required> 09:00 AM </label>
+                                                                    </div>
+                                                                </h4>
+                                                            {% else %}
+                                                                <h4>No Show</h4>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            {% if x.tafter_name == mobj.mname and ashow == '' %}
+
+                                                                <h4 style="color: #1c7430">
+                                                                    <div class="radio">
+                                                                        <label class="radio"><input name="sradio" type="radio" value="after {{ x.id }}" required> 13:00 PM </label>
+                                                                    </div>
+                                                                </h4>
+
+                                                            {% else %}
+                                                                <h4>No Show</h4>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            {% if x.teve_name == mobj.mname and eshow == '' %}
+                                                                <h4 style="color: #1c7430">
+                                                                    <div class="radio">
+                                                                        <label class="radio"><input name="sradio" type="radio" value="eve {{ x.id }}" required> 06:00 PM </label>
+                                                                    </div>
+                                                                </h4>
+                                                            {% else %}
+                                                                <h4>No Show</h4>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-sm-3"><h4>{{ x.tdate }}</h4></div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if x.tdate.month > sobj.stdate.month %}
+                                                <div class="row">
+                                                    <div class="col-sm-3"><h4>{{ x.tname }}</h4></div>
+                                                    <div class="col-sm-2">
+                                                        {% if x.tmorn_name == mobj.mname and mshow == '' %}
+                                                            <h4 style="color: #1c7430">
+                                                                <div class="radio">
+                                                                    <label><input name="sradio" type="radio" value="morn {{ x.id }}" required> 09:00 AM </label>
+                                                                </div>
+                                                            </h4>
+                                                        {% else %}
+                                                            <h4>No Show</h4>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        {% if x.tafter_name == mobj.mname and ashow == '' %}
+
+                                                            <h4 style="color: #1c7430">
+                                                                <div class="radio">
+                                                                    <label class="radio"><input name="sradio" type="radio" value="after {{ x.id }}" required> 13:00 PM </label>
+                                                                </div>
+                                                            </h4>
+
+                                                        {% else %}
+                                                            <h4>No Show</h4>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        {% if x.teve_name == mobj.mname and eshow == '' %}
+                                                            <h4 style="color: #1c7430">
+                                                                <div class="radio">
+                                                                    <label class="radio"><input name="sradio" type="radio" value="eve {{ x.id }}" required> 06:00 PM </label>
+                                                                </div>
+                                                            </h4>
+                                                        {% else %}
+                                                            <h4>No Show</h4>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-sm-3"><h4>{{ x.tdate }}</h4></div>
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-1"><div class="form-group"><input  type="submit" value="Proceed to Slots" class="btn btn-success"/></div></div>
+
+                    </div>
+                    </form>
+                </div>
+                {% endif %}
+                {% if today_c == 1 %}
+                    <div class="row">
+                    <form action="{% url 'custloc2' %}" method="POST">{% csrf_token %}
+                    <div class="row"><div class="col-sm-12"><h2>Select Show Place and Time:</h2></div></div>
+                    <div style="margin-top: 20px"></div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            {% for x in tobj %}
+                                {% if x.tname != 'Please update' and x.tcity == mobj.mcity %}
+                                    {% if x.tmorn_name == mobj.mname or x.tafter_name == mobj.mname or x.teve_name == mobj.mname %}
+                                        <div class="row">
+                                            <div class="col-sm-3"><h4>{{ x.tname }}</h4></div>
+                                            <div class="col-sm-2">
+                                                {% if x.tmorn_name == mobj.mname and mshow == '' %}
+                                                    <h4 style="color: #1c7430">
+                                                        <div class="radio">
+                                                            <label><input name="sradio" type="radio" value="morn {{ x.id }}" required> 09:00 AM </label>
+                                                        </div>
+                                                    </h4>
+                                                {% else %}
+                                                    <h4>No Show</h4>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {% if x.tafter_name == mobj.mname and ashow == '' %}
+
+                                                    <h4 style="color: #1c7430">
+                                                        <div class="radio">
+                                                            <label class="radio"><input name="sradio" type="radio" value="after {{ x.id }}" required> 13:00 PM </label>
+                                                        </div>
+                                                    </h4>
+
+                                                {% else %}
+                                                    <h4>No Show</h4>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {% if x.teve_name == mobj.mname and eshow == '' %}
+                                                    <h4 style="color: #1c7430">
+                                                        <div class="radio">
+                                                            <label class="radio"><input name="sradio" type="radio" value="eve {{ x.id }}" required> 06:00 PM </label>
+                                                        </div>
+                                                    </h4>
+                                                {% else %}
+                                                    <h4>No Show</h4>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-3"><h4>{{ x.tdate }}</h4></div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-1"><div class="form-group"><input  type="submit" value="Proceed to Slots" class="btn btn-success"/></div></div>
+
+                    </div>
+                    </form>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div style="margin-bottom: 100px"></div>
+    {% endblock %}
+</body>
+</html>

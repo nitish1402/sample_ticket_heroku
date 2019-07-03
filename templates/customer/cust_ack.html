@@ -1,0 +1,74 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container-fluid d-flex justify-content-between">
+            {% if res == 'y' %}
+                <div class="row">
+                <div class="col-sm-12">
+                    <div class="container">
+                        <h2 style="color: #1c7430">{{ mess }}</h2>
+                          <h2>Confirm Booking</h2>
+
+                          <table class="table table-bordered">
+                              <thead>
+                                    <tr>
+                                        <th>EMail</th>
+                                        <th>Theatre Name</th>
+                                        <th>Booked Date</th>
+                                        <th>Movie Name</th>
+                                        <th>Movie Time</th>
+                                        <th>Seats</th>
+                                        <th>Total Cost</th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                    <td>{{mail}}</td>
+                                    <td>{{name}}</td>
+                                    <td>{{date}}</td>
+                                    <td>{{sname}}</td>
+                                    <td>{{ stype }}</td>
+                                    <td>{{sslot}}</td>
+                                    <td>{{stcost}}/-</td>
+                                </tr>
+                              </tbody>
+                          </table>
+                </div>
+            </div>
+            </div>
+            <div class="container" style="margin: 20px 0 20px 0"></div>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    {% if mess == ''%}
+                        <form action="{% url 'custack' %}" method="POST">{% csrf_token %}
+                            <div style="margin: 0 0 10px 0"><h2>Enter Payment Details: </h2></div>
+                        <div class="form-group">
+                            <label class="name">CARD NUMBER: </label>
+                            <input class="form-control" maxlength="12" type="text" name="tcard" required/>
+                        </div>
+                        <div class="form-group">
+                            <label class="name">CVV NUMBER:</label>
+                            <input class="form-control" maxlength="3" type="text" max="3" name="tcvv" required/>
+                        </div>
+                        <input type="submit" value="BOOK" class="btn btn-success" />
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            {% else %}
+                <h1 style="color: red">Please select atleast one seat to book, go back and select one</h1>
+            {% endif %}
+        </div>
+    {% endblock %}
+</body>
+</html>

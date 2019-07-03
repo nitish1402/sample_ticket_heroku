@@ -1,0 +1,65 @@
+{% extends 'theatre/the_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block the_head %}
+
+    {% endblock %}
+</head>
+<body>
+    {% block the_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row">
+                <div style="text-align: center"><h4>Update Profile...</h4></div>
+                    <h3 style="color: #1c7430">{{ mess }}</h3><br />
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <form action="{% url 'theprofile' %}" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                        <label for="name">Theatre Name:</label>
+                        <input type="text" class="form-control" name="tname" value="{{ treg.tname }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Theatre Location</label>
+                        <input type="text" class="form-control" name="tloc" value="{{ treg.tloc }}" required/>
+                    </div>
+                        <div class="form-group">
+                        <label for="name">Theatre City</label>
+                        <input type="text" class="form-control" name="tcity" value="{{ treg.tcity }}" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Username: </label>
+                            <input type="text" name="uname" id="uname" value="{{ ureg.uname }}" maxlength="20" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email address: </label>
+                            <input type="email" class="form-control" value="{{ ureg.umail }}" name="umail" disabled="disabled"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password: </label>
+                            <input type="password" name="upass" value="{{ ureg.upass }}" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Phone Number: </label>
+                            <input type="text" value="{{ ureg.uphone }}" name="uphone" maxlength="10" class="form-control" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Address: </label><br />
+                            <textarea class="form-control" name="uaddr" rows="3" required>{{ ureg.uaddr }}</textarea>
+                        </div>
+
+                        <input type="submit" class="btn btn-success" value="UPDATE" />
+
+                    </form>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

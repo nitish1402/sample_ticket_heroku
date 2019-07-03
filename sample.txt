@@ -1,0 +1,83 @@
+def custslot(request):
+    template = loader.get_template('customer/cust_slot.html')
+    context = {'mess': '','dis':''}
+    list = []
+    tlist = []
+    for x in range(1, 51):
+        tlist.append(x)
+    context['tlist'] = tlist
+
+    sid = request.session['sid']
+
+    context['sobj'] = sobj = Slot.objects.get(id=sid)
+    context['tobj'] = tobj = Treg.objects.get(id=sobj.sid)
+    context['slots'] = slots = Slot.objects.all()
+
+
+
+    if request.method == 'POST':
+        cdate = request.POST.get('sdate')
+
+        format_str = '%Y-%m-%d'
+        cd = datetime.strptime(cdate, format_str)
+        cd_day = cd.day
+        cd_month = cd.month
+        cd_year = cd.year
+
+        if cd_year >= pdate.year:
+            if cd_month == pdate.month:
+                if cd_day >= pdate.day:
+                    context['mess'] = ''
+                else:
+                    context['mess'] = 'Enter proper Date'
+            elif cd_month > pdate.month:
+                if cd_day <= pdate.day:
+                    context['mess'] = ''
+                else:
+                    context['mess'] = 'Enter proper Date'
+            else:
+                context['mess'] = 'Enter proper Date'
+        else:
+            context['mess'] = 'Enter proper Date'
+
+        if context['mess'] == '':
+            if cd_year <= edate.year:
+                if cd_month == edate.month:
+                    if cd_day <= edate.day:
+                        context['mess'] = ''
+                    else:
+                        context['mess'] = 'Enter proper Date'
+                elif cd_month < edate.month:
+                    if cd_day >= edate.day:
+                        context['mess'] = ''
+                    else:
+                        context['mess'] = 'Enter proper Date'
+                else:
+                    context['mess'] = 'Enter proper Date'
+            else:
+                context['mess'] = 'Enter proper Date'
+
+        if context['mess'] == '':
+            sobj.stdate = cd
+            sobj.stcost = int(tobj.tcost)
+            print(cd)
+            for x in slots:
+                if x.sstat == 'yes' and x.stdate != None:
+                    d = (x.stdate)
+                    sty = d.year
+                    stm = d.month
+                    std = d.day
+
+                    cty = sobj.stdate.year
+                    ctm = sobj.stdate.month
+                    ctd = sobj.stdate.day
+
+                    if (std == ctd and stm == ctm and cty == sty) and x.stname == sobj.stname and x.sshowname == sobj.sshowname and x.sshowtype == sobj.sshowtype:
+                        list.append(int(x.sslot))
+
+            context['dis'] = 'yes'
+            context['list'] = list
+            sobj.save()
+            print(context['mess'])
+
+    return HttpResponse(template.render(context,request))

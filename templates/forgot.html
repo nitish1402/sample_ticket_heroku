@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block base_head %}
+    <title>Forgot Password</title>
+    {% endblock %}
+</head>
+<body>
+    {% block base_body %}
+        <div class="container">
+        <div class="row"><div class="col-sm-12" style="text-align: center"><a style="font-size: 35px;color: black;" href="{% url 'index' %}">MY MOVIES</a></div></div>
+
+        <div class="row" style="margin: 80px 0">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+
+                <div style="text-align: center"><h2>Enter Details...</h2></div>
+            <div style="margin-top:30px; width:300px; ">
+                 <form action="{% url 'forgot' %}" method="POST">{% csrf_token %}
+
+                     <div class="form-group">
+                        <label for="username">Enter Username:</label>
+                        <input type="text" class="form-control" name="uname" id="uname" required/>
+                      </div>
+                     <div class="form-group">
+                        <label for="email">Enter Email address:</label>
+                        <input type="email" class="form-control" name="umail" id="umail" required/>
+                      </div>
+                     <div class="form-group">
+                        <label for="pwd">Enter New Password:</label>
+                        <input type="password" name="upass" id="upass" class="form-control" required/>
+                      </div>
+
+                      <input type="submit" class="btn btn-success" value="Create Password" />
+                 </form>
+            </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        </div>
+        <h1>{{ mess }}</h1>
+    {% endblock %}
+</body>
+</html>

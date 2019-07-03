@@ -1,0 +1,35 @@
+{% extends 'customer/cust_base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block cust_head %}
+        <title>Customer Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block cust_body %}
+        <div class="container d-flex justify-content-between">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <form action="{% url 'custmovie' %}" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <label>Select City</label>
+                        <select class="form-control" name="selopt">
+                            {% for x in obj %}
+                                {% if x.tcity != mess %}
+                                <option value="{{ x.tcity }}">{{ x.tcity }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                <input type="submit" value="select" class="btn btn-success" />
+                </form>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>
